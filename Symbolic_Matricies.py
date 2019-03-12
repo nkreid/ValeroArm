@@ -1,7 +1,7 @@
-# This file will take the number of links and the number of DOFs and output symbolic matrices
+# This file will take the number of DOFs (joints) and output symbolic matrices for G and J
+# in 2D, we can assume number of links is always one more than # of joints (no joint at end of last link)
 import sympy as sym
-from sympy.printing.str import StrPrinter as StrPrinter
-# in 2D, we can assume # of links is always one more than # of joints (no joint at end of last link)
+from sympy.printing.str import StrPrinter as StrPrinter #for formating matrix outputs
 
 
 def R_n(n):
