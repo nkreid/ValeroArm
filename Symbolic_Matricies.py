@@ -1,5 +1,6 @@
 # This file will take the number of DOFs (joints) and output symbolic matrices for G and J
-# in 2D, we can assume number of links is always one more than # of joints (no joint at end of last link)
+# in 2D, we can assume number of joints equals number of links
+# this model works for n+1 muslces, assuming n joints
 import sympy as sym
 from sympy.printing.str import StrPrinter as StrPrinter #for formating matrix outputs
 
@@ -52,15 +53,47 @@ def J(joints):
         Q.append(q_i)
     return X.jacobian(Q)
 
-# print A.table(StrPrinter()) for Matrix layout
 
-# B = sym.trigsimp(T_n(0)*T_n(1)*T_n(2))
-# print(B.table(StrPrinter()))
-# C = T_0_to(3)
-# print(C.table(StrPrinter()))
+def r(joints, muscles):
+    r = sym.zeros(joints, muscles)
+    for i in range(joints):
+        for j in range(muscles):
+            r_ij = sym.symbols('r_' + str(i+1)+str(j+1))
+            r[i, j] = r_ij
+    return r
 
-x = int(input('How many joints are in the system?'))
-print('The G matrix is')
-print(G(x).table(StrPrinter()))
-print('\nThe J matrix is')
-print(J(x).table(StrPrinter()))
+
+def f(muscles):
+    f = sym.eye(muscles, muscles)
+    for i in range(muscles):
+        f_i = sym.symbols('f_' + str(i+1))
+        f[i, i] = f_i
+    return f
+
+
+def a(muscles):
+    a = sym.ones(muscles, 1)
+    for i in range(muscles):
+        a_i = sym.symbols('a_' + str(i+1))
+        a[i, 0] = a_i
+    return a
+
+
+def end_f(joints, muscles):
+    Jtrans = J(joints).T
+    Jtrans.col_del(-1)  # deleting last row to remove dependent vars if not square
+    return Jtrans**(-1) * r(joints, muscles) * f(muscles) * a(muscles)
+
+
+
+# A.table(StrPrinter()) or for Matrix layout
+# A.tolist() for list to
+
+# x = int(input('How many joints are in the system?'))
+# print('The G matrix is')
+# print(G(x).table(StrPrinter()))
+# print('\nThe J matrix is')
+# print(J(x).table(StrPrinter()))
+
+
+print(end_f(2,3).table)
