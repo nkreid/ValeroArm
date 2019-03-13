@@ -2,7 +2,7 @@
 # Working with a 2joint,2link planar system
 import sympy as sym
 import numpy as np
-from Symbolic_Matrices import J
+from Symbolic_Matricies import J
 
 expr = sym.sympify(J(2))
 
