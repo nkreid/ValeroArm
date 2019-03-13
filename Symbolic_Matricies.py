@@ -88,12 +88,3 @@ def end_f(joints, muscles):
 
 # A.table(StrPrinter()) or for Matrix layout
 # A.tolist() for list to
-
-# x = int(input('How many joints are in the system?'))
-# print('The G matrix is')
-# print(G(x).table(StrPrinter()))
-# print('\nThe J matrix is')
-# print(J(x).table(StrPrinter()))
-
-
-print(end_f(2,3).table)
