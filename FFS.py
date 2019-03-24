@@ -4,9 +4,8 @@ import sympy as sym
 import numpy as np
 from Symbolic_Matricies import J
 
-expr = sym.sympify(J(2))
-
 r = np.array([[-1, 1, -1], [1, 0, -1]])
+
 
 def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
 
@@ -24,8 +23,9 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
 
     # H matrix
     H = J_inv_T.dot(R).dot(F_0)
+    print(H)
 
-    # Muscle activation possibilites
+    # Muscle activation possibilities
     a_poss = np.array([[1, 1, 1],
                        [1, 0, 0],
                        [1, 0, 1],
