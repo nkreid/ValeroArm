@@ -23,7 +23,6 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
 
     # H matrix
     H = J_inv_T.dot(R).dot(F_0)
-    print(H)
 
     # Muscle activation possibilities
     a_poss = np.array([[1, 1, 1],
@@ -35,6 +34,12 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
                        [0, 0, 1],
                        [0, 0, 0]])
 
+    # Minkowski sum
+    W = np.zeros((2,8))
+    for i in range(len(a_poss)):
+        W[:,i] = H.dot(a_poss[i].T)
+    f_x = W[0]
+    f_y = W[1]
 
 ffs(1,1,1,1,r,3)
 
