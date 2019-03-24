@@ -6,7 +6,7 @@ from Symbolic_Matricies import J
 
 expr = sym.sympify(J(2))
 
-
+r = np.array([[-1, 1, -1], [1, 0, -1]])
 
 def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
 
@@ -18,9 +18,25 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
     # Creating Inverse Transpose of the Jacobian
     J_inv = np.linalg.inv(J_square)
     J_inv_T = J_inv.T
-    print(J_inv_T)
+
+    # Max muscle force matrix
+    F_0 = np.diag([maxmotorforce, maxmotorforce, maxmotorforce])
+
+    # H matrix
+    H = J_inv_T.dot(R).dot(F_0)
+
+    # Muscle activation possibilites
+    a_poss = np.array([[1, 1, 1],
+                       [1, 0, 0],
+                       [1, 0, 1],
+                       [1, 1, 0],
+                       [0, 1, 1],
+                       [0, 1, 0],
+                       [0, 0, 1],
+                       [0, 0, 0]])
 
 
-ffs(135, -50, .234, .23562, 1, 1)
+ffs(1,1,1,1,r,3)
+
 
 
