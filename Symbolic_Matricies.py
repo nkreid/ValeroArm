@@ -28,8 +28,14 @@ def T_n(n):
 def T_0_to(n):
     # this function dots the T_n matrices from 0 to n-1
     T = 1
-    for i in range(n):
-        T *= T_n(i)
+    for i in range(n+1):
+        if i != n:
+            T *= T_n(i)
+        else:
+            l_n = sym.symbols('l_'+str(n))
+            x = sym.eye(4,4)
+            x[0, 3] = l_n
+            T *= x
     return sym.trigsimp(T)  # sym.trigsimp() uses trig identities to simplify the matrix
 
 
@@ -88,3 +94,5 @@ def end_f(joints, muscles):
 
 # A.table(StrPrinter()) or for Matrix layout
 # A.tolist() for list to
+
+
