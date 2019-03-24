@@ -2,6 +2,7 @@
 # Working with a 2joint,2link planar system
 import sympy as sym
 import numpy as np
+import matplotlib as plt
 from Symbolic_Matricies import J
 
 r = np.array([[-1, 1, -1], [1, 0, -1]])
@@ -40,6 +41,7 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
         W[:,i] = H.dot(a_poss[i].T)
     f_x = W[0]
     f_y = W[1]
+
 
 ffs(1,1,1,1,r,3)
 
