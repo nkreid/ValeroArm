@@ -1,12 +1,11 @@
-# This program will deal with the equation: Wrench = J^(T) * R * F_o * a
+# This function will calcualte and graph the feasible force set at a particular endpoint,
+# with maximal endpoint activation and a fixed tendon routing configuration
 # Working with a 2joint,2link planar system
 import sympy as sym
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.spatial import ConvexHull
 from Symbolic_Matricies import J, T_0_to
-
-r = np.array([[-1, 1, -1], [1, 0, -1]])
 
 
 def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
@@ -52,10 +51,15 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
     for simplex in hull.simplices:
         plt.plot(W.T[simplex, 0], W.T[simplex, 1], 'k-')
 
+    # Graph Formatting
+    plt.xlabel('Force in X-Direction')
+    plt.ylabel('Force in Y-Direction')
+    plt.title('Feasible Forces at a Fixed Endpoint')
+
     plt.show()
 
-
-ffs(135,-120,.254,.305,r,3)
+r = np.array([[-1, 1, -1], [1, 0, -1]])
+ffs(135, -120, .254, .305, r, 1)
 
 
 
