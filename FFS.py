@@ -2,17 +2,22 @@
 # Working with a 2joint,2link planar system
 import sympy as sym
 import numpy as np
-import matplotlib as plt
-from Symbolic_Matricies import J
+import matplotlib.pyplot as plt
+from scipy.spatial import ConvexHull
+from Symbolic_Matricies import J, T_0_to
 
 r = np.array([[-1, 1, -1], [1, 0, -1]])
 
 
 def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
 
+    # Endpoint of limb
+    endpoint_list = T_0_to(2).subs({'q_1': sym.rad(q_1), 'q_2': sym.rad(q_2), 'l_1': l_1 , 'l_2': l_2}).evalf().tolist()
+    endpoint = np.array(endpoint_list, dtype= 'float')[:2,3]
+
     # Creating the numerical Jacobian for the system J(2) is for a 2 joint, 2 link system
     J_num = J(2).subs({'q_1': sym.rad(q_1), 'q_2': sym.rad(q_2), 'l_1': l_1 , 'l_2': l_2}).evalf().tolist()
-    J_mat = np.array(J_num, dtype= 'float')
+    J_mat = np.array(J_num, dtype='float')
     J_square = J_mat[:2, :2] # Reduce the Jacobian to a square matrix
 
     # Creating Inverse Transpose of the Jacobian
@@ -35,15 +40,22 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
                        [0, 0, 1],
                        [0, 0, 0]])
 
-    # Minkowski sum
+
     W = np.zeros((2,8))
     for i in range(len(a_poss)):
         W[:,i] = H.dot(a_poss[i].T)
-    f_x = W[0]
-    f_y = W[1]
+    hull = ConvexHull(W.T)
+
+    # Graphing of FFS
+    plt.plot(W[0],W[1], 'bo') # maximal forces are blue
+    plt.plot(endpoint[0], endpoint[1], 'ro') # endpoint is red
+    for simplex in hull.simplices:
+        plt.plot(W.T[simplex, 0], W.T[simplex, 1], 'k-')
+
+    plt.show()
 
 
-ffs(1,1,1,1,r,3)
+ffs(135,-120,.254,.305,r,3)
 
 
 

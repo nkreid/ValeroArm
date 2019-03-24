@@ -41,8 +41,8 @@ def T_0_to(n):
 
 def G(joints):
     n = joints
-    x = T_0_to(n+1)[0, 3]
-    y = T_0_to(n+1)[1, 3]
+    x = T_0_to(n)[0, 3]
+    y = T_0_to(n)[1, 3]
     alpha = 0
     for i in range(n):
         q_i = sym.symbols('q_'+str(i+1))
