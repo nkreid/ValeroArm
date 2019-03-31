@@ -8,7 +8,7 @@ from scipy.spatial import ConvexHull
 from Symbolic_Matricies import J, T_0_to
 
 
-def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
+def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce, plotOn = 'Y'):
 
     # Endpoint of limb
     endpoint_list = T_0_to(2).subs({'q_1': sym.rad(q_1), 'q_2': sym.rad(q_2), 'l_1': l_1 , 'l_2': l_2}).evalf().tolist()
@@ -46,17 +46,18 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce):
     hull = ConvexHull(W.T)
 
     # Graphing of FFS
-    plt.plot(W[0],W[1], 'bo') # maximal forces are blue
-    plt.plot(endpoint[0], endpoint[1], 'ro') # endpoint is red
-    for simplex in hull.simplices:
-        plt.plot(W.T[simplex, 0], W.T[simplex, 1], 'k-')
+    if plotOn == 'Y':
+        plt.plot(W[0],W[1], 'bo') # maximal forces are blue
+        plt.plot(endpoint[0], endpoint[1], 'ro') # endpoint is red
+        for simplex in hull.simplices:
+            plt.plot(W.T[simplex, 0], W.T[simplex, 1], 'k-')
 
-    # Graph Formatting
-    plt.xlabel('Force in X-Direction')
-    plt.ylabel('Force in Y-Direction')
-    plt.title('Feasible Forces at a Fixed Endpoint')
+        # Graph Formatting
+        plt.xlabel('Force in X-Direction')
+        plt.ylabel('Force in Y-Direction')
+        plt.title('Feasible Forces at a Fixed Endpoint')
 
-    plt.show()
+        plt.show()
 
 r = np.array([[-1, 1, -1], [1, 0, -1]])
 ffs(135, -120, .254, .305, r, 1)
