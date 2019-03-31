@@ -45,10 +45,34 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce, plotOn = 'Y'):
         W[:,i] = H.dot(a_poss[i].T)
     hull = ConvexHull(W.T)
 
+    def LargestCircle(hull, x_center, y_center):
+        space = np.linspace(0, 2*np.pi)
+        circ = np.array([np.cos(space), np.sin(space)])
+        r = 0
+        step = 0.0005
+        inHull = True
+
+
+        while inHull == True:
+
+            points = (r * circ) + np.array([[x_center], [y_center]])
+
+            from scipy.spatial import Delaunay
+            if not isinstance(hull,Delaunay):
+                hull = Delaunay(hull)
+            if np.all(hull.find_simplex(points.T)>=0):
+                r += step
+            else:
+                break
+        return r, points
+
+    max_R, circle = LargestCircle(W.T, endpoint[0], endpoint[1])
+
     # Graphing of FFS
     if plotOn == 'Y':
-        plt.plot(W[0],W[1], 'bo') # maximal forces are blue
+        plt.plot(W[0], W[1], 'bo') # maximal forces are blue
         plt.plot(endpoint[0], endpoint[1], 'ro') # endpoint is red
+        plt.plot(circle[0], circle[1], 'g-')
         for simplex in hull.simplices:
             plt.plot(W.T[simplex, 0], W.T[simplex, 1], 'k-')
 
@@ -59,8 +83,10 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce, plotOn = 'Y'):
 
         plt.show()
 
+    return max_R
+
 r = np.array([[-1, 1, -1], [1, 0, -1]])
-ffs(135, -120, .254, .305, r, 1)
+print(ffs(135, -120, .254, .305, r, 1, 'N'))
 
 
 
