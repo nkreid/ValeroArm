@@ -22,8 +22,8 @@ q1, q1 = np.meshgrid(q1, q2)
 ax.plot_surface(q1, q2, rad,
                        linewidth=0, antialiased=False)
 
-plt.xlabel('Elbow Angle')
-plt.ylabel('Shoulder Angle')
+plt.xlabel('Shoulder Angle')
+plt.ylabel('Elbow Angle')
 plt.title('Max radius at given endpoint')
 plt.show()
 
