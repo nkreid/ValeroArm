@@ -6,18 +6,25 @@ import matplotlib.pyplot as plt
 
 
 def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
-    # Convert to Radians
-    q_1 = np.radians(q1)
-    q_2 = np.radians(q2)
 
-    # Endpoint of limb
-    endpoint = np.array([[l_1*np.cos(q_1) + l_2*np.cos(q_1 + q_2)], [l_1*np.sin(q_1) + l_2*np.sin(q_1 + q_2)]])
 
-    # Creating the numerical Jacobian for the system J(2) is for a 2 joint, 2 link system
-    J_mat = np.array([[-l_1 * np.sin(q_1) - l_2*np.sin(q_1 + q_2), -l_2*np.sin(q_1 + q_2)],
-                      [l_1*np.cos(q_1) + l_2*np.cos(q_1 + q_2),  l_2*np.cos(q_1 + q_2)],
-                      [1, 1]])
-    J_square = J_mat[:2, :2] # Reduce the Jacobian to a square matrix
+    if q2 != 0:
+
+        # Convert to Radians
+        q_1 = np.radians(q1)
+        q_2 = np.radians(q2)
+
+        # Endpoint of limb
+        endpoint = np.array([[l_1*np.cos(q_1) + l_2*np.cos(q_1 + q_2)], [l_1*np.sin(q_1) + l_2*np.sin(q_1 + q_2)]])
+
+        # Creating the numerical Jacobian for the system J(2) is for a 2 joint, 2 link system
+        J_mat = np.array([[-l_1 * np.sin(q_1) - l_2*np.sin(q_1 + q_2), -l_2*np.sin(q_1 + q_2)],
+                          [l_1*np.cos(q_1) + l_2*np.cos(q_1 + q_2),  l_2*np.cos(q_1 + q_2)],
+                          [1, 1]])
+        J_square = J_mat[:2, :2] # Reduce the Jacobian to a square matrix
+
+    else:
+        pass # Come back to this later, we have to deal when the elbow crosses zero
 
     # Creating Inverse Transpose of the Jacobian
     J_inv = np.linalg.inv(J_square)
