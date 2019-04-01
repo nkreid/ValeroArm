@@ -5,7 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
+def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
+    # Convert to Radians
+    q_1 = np.radians(q1)
+    q_2 = np.radians(q2)
 
     # Endpoint of limb
     endpoint = np.array([[l_1*np.cos(q_1) + l_2*np.cos(q_1 + q_2)], [l_1*np.sin(q_1) + l_2*np.sin(q_1 + q_2)]])
@@ -63,7 +66,6 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
         return r, points
 
     max_R, circle = LargestCircle(W.T, endpoint[0], endpoint[1])
-    print(circle)
 
     # Graphing of FFS
     if plotOn == 'Y':
@@ -82,5 +84,5 @@ def ffs(q_1, q_2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
 
     return max_R
 
-# print(ffs(135, -120, .267, .272, np.array([[-1, 1, -1], [1, 0, -1]]), 1, 'Y'))
+# print(ffs(135, -40, .267, .272, np.array([[-1, 1, -1], [1, 0, -1]]), 1))
 
