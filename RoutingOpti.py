@@ -1,7 +1,7 @@
 import numpy as np
 import itertools
 
-
+# This function produces possible rows with specified possibilities
 def poss_rows(value_list, length):
     row = np.array(list(itertools.product(value_list, repeat=length)))
     row_del = []
@@ -13,14 +13,21 @@ def poss_rows(value_list, length):
     row = np.delete(row, row_del, 0)
     return row
 
+# This function combines rows and removes matrices if they are
+# different rearrangements of columns
+def possible_routes(row1,row2):
+    poss_list = []
+    for i in row1:
+        for j in row2:
+            route = np.array([i, j])
+            arr = route[:,np.lexsort((route[1,:], route[0,:]))]
+            if not any((arr == x).all() for x in poss_list):
+                poss_list.append(arr)
+    return np.asarray(poss_list)
+
+# There cant be a column the has a zero above a non-zero value this is because tendons
+# can not pass a distal joint without first passing the ones proximal to it
 a = poss_rows([-1, 1], 3)
 b = poss_rows([-1, 0, 1], 3)
-
-poss = np.array([[[]]])
-for i in a:
-    for j in b:
-        route = np.array([i, j])
-        arr = route[:,np.lexsort((route[1,:], route[0,:]))]
-        print(arr)
-
+c = possible_routes(a, b)
 
