@@ -29,5 +29,3 @@ def possible_routes(row1,row2):
 # can not pass a distal joint without first passing the ones proximal to it
 a = poss_rows([-1, 1], 3)
 b = poss_rows([-1, 0, 1], 3)
-c = possible_routes(a, b)
-
