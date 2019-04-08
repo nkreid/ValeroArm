@@ -1,5 +1,6 @@
 import numpy as np
 import itertools
+from OptiFFS import optiFFS
 
 # This function produces possible rows with specified possibilities
 def poss_rows(value_list, length):
@@ -29,3 +30,18 @@ def possible_routes(row1,row2):
 # can not pass a distal joint without first passing the ones proximal to it
 a = poss_rows([-1, 1], 3)
 b = poss_rows([-1, 0, 1], 3)
+
+data = np.load('PossibleRoute.npy')
+dicts = {}
+routes = []
+radii = []
+for i in data[1:]:
+    try:
+        f = optiFFS(i)
+    except QhullError:
+        pass
+    routes.append(i)
+    radii.append(f)
+    print(routes)
+    print(np.asarray(radii))
+

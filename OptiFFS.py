@@ -10,7 +10,7 @@ def optiFFS(rout):
     rad = np.zeros((1, len(q2)))
     for i in range(len(q2)):
             rad[0, i] = ffs(0, q2[i], l1, l2, rout, 1)
-    area = integrate.trapz(rad, x=q2)
+    area = integrate.trapz(np.absolute(rad), x=q2)
     return float(area)
 
 
@@ -44,5 +44,3 @@ def optiplot(rout):
     plt.ylim(-10, 150)
     plt.show()
 
-r = np.array([[-1, 1, -1], [1, 0, -1]])
-print(optiFFS(r))

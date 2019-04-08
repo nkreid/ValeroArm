@@ -90,6 +90,3 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
         plt.show()
 
     return max_R
-
-# print(ffs(135, -40, .267, .272, np.array([[-1, 1, -1], [1, 0, -1]]), 1))
-
