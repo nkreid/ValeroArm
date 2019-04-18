@@ -160,17 +160,17 @@ def possible_routes(row1,row2):
 a = poss_rows([-1, 1], 3)
 b = poss_rows([-1, 0, 1], 3)
 
-data = np.load('PossibleRoute.npy')
-dicts = {}
-routes = []
-radii = []
-for i in data:
-    try:
-        f = optiFFS(i)
-    except:
-        f = 'Error'
-    routes.append(i)
-    radii.append(f)
-    print(routes)
-    print(np.asarray(radii))
+# data = np.load('PossibleRoute.npy')
+# routes = []
+# radii = []
+# for i in data:
+#     try:
+#         f = optiFFS(i)
+#     except:
+#         f = 'Error'
+#     routes.append(i)
+#     radii.append(f)
+# dicts = dict(zip(routes, radii))
+# print(dicts)
 
+print(optiFFS([[-1, -1, 1], [-1, 1 ,-1]]))

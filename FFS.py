@@ -35,6 +35,7 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
 
     # H matrix
     H = J_inv_T.dot(R).dot(F_0)
+    print(H)
 
     # Muscle activation possibilities
     a_poss = np.array([[1, 1, 1],
@@ -50,9 +51,12 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
     W = np.zeros((2,8))
     for i in range(len(a_poss)):
         W[:,i] = H.dot(a_poss[i].T)
+    # print(W.T)
+
+
     hull = ConvexHull(W.T)
 
-    def LargestCircle(hull, x_center, y_center):
+    def LargestCircle(hul, x_center, y_center):
         space = np.linspace(0, 2*np.pi)
         circ = np.array([np.cos(space), np.sin(space)])
         r = 0
@@ -64,8 +68,8 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
             points = (r* circ) + np.array([x_center, y_center])
 
             from scipy.spatial import Delaunay
-            if not isinstance(hull,Delaunay):
-                hull = Delaunay(hull)
+            if not isinstance(hull, Delaunay):
+                hull = Delaunay(hul)
             if np.all(hull.find_simplex(points.T)>=0):
                 r += step
             else:
@@ -90,3 +94,14 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
         plt.show()
 
     return max_R
+
+rout = [[-1, -1,  1],
+       [-1, -1,  1]]
+q2 = np.arange(90, 150, 10)
+l1 = .267
+l2 = .272
+rad = np.zeros((1, len(q2)))
+for i in range(len(q2)):
+    rad[0, i] = ffs(90, q2[i], l1, l2, rout, 1, 'Y')
+
+print(rad)
