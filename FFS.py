@@ -24,7 +24,12 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
         J_square = J_mat[:2, :2] # Reduce the Jacobian to a square matrix
 
     else:
-        pass # Come back to this later, we have to deal when the elbow crosses zero
+        # Convert to Radians
+        q_1 = np.radians(q1)
+
+        J_square = np.array([l1*np.sin(q_1)])
+
+        endpoint = np.array([[l_1*np.cos(q_1)], [l_1*np.sin(q_1)]])
 
     # Creating Inverse Transpose of the Jacobian
     J_inv = np.linalg.inv(J_square)
@@ -68,7 +73,7 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
             points = (r* circ) + np.array([x_center, y_center])
 
             from scipy.spatial import Delaunay
-            if not isinstance(hull, Delaunay):
+            if not isinstance(hul, Delaunay):
                 hull = Delaunay(hul)
             if np.all(hull.find_simplex(points.T)>=0):
                 r += step

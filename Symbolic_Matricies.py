@@ -94,3 +94,4 @@ def end_f(joints, muscles):
 
 # A.table(StrPrinter()) or for Matrix layout
 # A.tolist() for list to
+
