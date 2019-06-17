@@ -96,7 +96,7 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
 
         plt.show()
 
-    return max_R, endpoint, circle
+    return max_R
 
 
 # l1 = .267
