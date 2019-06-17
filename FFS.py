@@ -1,4 +1,4 @@
-# This function will calcualte and graph the feasible force set at a particular endpoint,
+# This function will calculate and graph the feasible force set at a particular endpoint,
 # with maximal endpoint activation and a fixed tendon routing configuration
 # Working with a 2joint,2link planar system
 import numpy as np
@@ -40,7 +40,6 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
 
     # H matrix
     H = J_inv_T.dot(R).dot(F_0)
-    print(H)
 
     # Muscle activation possibilities
     a_poss = np.array([[1, 1, 1],
@@ -56,7 +55,6 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
     W = np.zeros((2,8))
     for i in range(len(a_poss)):
         W[:,i] = H.dot(a_poss[i].T)
-    # print(W.T)
 
 
     hull = ConvexHull(W.T)
@@ -94,19 +92,17 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
         # Graph Formatting
         plt.xlabel('Force in X-Direction')
         plt.ylabel('Force in Y-Direction')
-        plt.title('Feasible Forces at a Fixed Endpoint')
+        plt.title('Feasible Forces with Elbow at ' + str(q2) + ' degrees')
 
         plt.show()
 
-    return max_R
+    return max_R, endpoint, circle
 
-rout = [[-1, -1,  1],
-       [-1, -1,  1]]
-q2 = np.arange(90, 150, 10)
-l1 = .267
-l2 = .272
-rad = np.zeros((1, len(q2)))
-for i in range(len(q2)):
-    rad[0, i] = ffs(90, q2[i], l1, l2, rout, 1, 'Y')
 
-print(rad)
+# l1 = .267
+# l2 = .272
+# r = np.array([[-1, -1, 1], [-1, 1, 0]])
+# q2 = np.arange(10, 150, 10)
+# rad = np.zeros((1, len(q2)))
+# for i in range(len(q2)):
+#     ffs(0, q2[i], l1, l2, r, 1, 'Y')
