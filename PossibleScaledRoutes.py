@@ -24,6 +24,21 @@ def iterate_matrix(size, values):
 poss_values = possible_matrix_values(1, 0.2)
 
 np.set_printoptions(threshold=np.sys.maxsize)  # Prints un-truncated arrays
-print(iterate_matrix((2,3), poss_values))
 
-
+routes = np.load('PossibleRoute.npy')
+for i in routes:
+	for n in range(len(iterate_matrix((2,3), poss_values)[0:10])):
+		scale_matrix = np.array((iterate_matrix((2,3), poss_values)[20000+n]))
+		new_matrix = i* scale_matrix.reshape((2,3))
+		print(new_matrix)
+# routes = []
+# radii = []
+# for i in data:
+#     try:
+#         f = optiFFS(i)
+#     except:
+#         f = 'Error'
+#     routes.append(i)
+#     radii.append(f)
+# print(routes)
+# print(radii)
