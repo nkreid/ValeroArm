@@ -7,7 +7,7 @@ l2 = .272
 r = np.array([[-1, -1, 1], [-1, 1, 0]])
 q2 = np.arange(10, 150, 10)
 for i in range(len(q2)):
-    endpoint = ffs(0, q2[i], l1, l2, r, 1)[1]
+    endpoint = ffs(0, q2[i], l1, l2, r, 1)[1]  # need to add "endpoint" as a return of ffs
     radi = ffs(0, q2[i], l1, l2, r, 1)[0]
     plt.plot(endpoint[0], endpoint[1], 'bo', ms=radi*10)
     plt.plot(endpoint[0], endpoint[1], 'ko')

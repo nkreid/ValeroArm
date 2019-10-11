@@ -4,7 +4,7 @@ from scipy import integrate
 
 
 def optiFFS(rout):
-    q2 = np.arange(1, 151, 1)
+    q2 = np.arange(1, 151, 20)
     l1 = .267
     l2 = .272
     rad = np.zeros((1, len(q2)))
