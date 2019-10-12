@@ -1,4 +1,3 @@
 # ValeroArm
 BBDL: ValeroArm project
-This is a project that was started by PH and I am planning to take over. 
-I am now beginning to use git from the terminal.
+The following is the code attached for my Directed Research project. I spent the summer of 2019 building
