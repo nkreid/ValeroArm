@@ -7,9 +7,10 @@ import os
 import time
 from heapq import nsmallest
 from random import randint
+import pprint
 
-def optiFFS(rout):
-    q2 = np.arange(1, 151, 20)
+def optiFFS(rout, angle_step):
+    q2 = np.arange(1, 151, angle_step)
     l1 = .267
     l2 = .272
     rad = np.zeros((1, len(q2)))
@@ -77,22 +78,70 @@ a = poss_rows([-1, 1], 3)
 b = poss_rows([-1, 0, 1], 3)
 
 # np.save('PossibleRoutes',possible_routes(a,b))
-data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes.npy"))
-top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
+
+
+def status_update(sample, percent_print):
+    update = int(sample * percent_print/100)
+    return update
+
+
+def random_optimization(sample, angle_step):
+    top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
             'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
+    for i in range(sample):
+        route = np.array(data[randint(0,len(data))]).reshape((2,3))
+        try:
+            f = optiFFS(route, angle_step)
+        except:
+            f = 0
+        route_string = np.array2string(route)
+        top_dict[route_string] = f
+        worst_key = nsmallest(1, top_dict, key=top_dict.get)
+        top_dict.pop(worst_key[0])
+        if i % update_freq == 0:
+            print("You are " + str(i*Status_update_percent/update_freq) + " percent done." )
+
+
+def sequential_optimization(sample, angle_step, start=0):
+    top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
+                'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
+    for i in range(sample):
+        route = np.array(data[i+start]).reshape((2,3))
+        try:
+            f = optiFFS(route)
+        except:
+            f = 0
+        route_string = np.array2string(route, angle_step)
+        top_dict[route_string] = f
+        worst_key = nsmallest(1, top_dict, key=top_dict.get)
+        top_dict.pop(worst_key[0])
+        if i % update_freq == 0:
+            print("You are " + str(i*Status_update_percent/update_freq) + " percent done." )
+
+
+# Optimization Parameters
+sample = 1000                   # Max sample is len(data) = 8,600,000
+Status_update_percent = 10      # Percentages to be notified at during process
+angle_step = 20                 # Angle to step through in the optiFFS function
+update_freq = status_update(sample, Status_update_percent)
+
+# Data from PossibleScaledRoutes.py
+data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes.npy"))
+
+
+# Random Optimization
 start_time = time.time()
-print(len(data))
-# for i in range(100):
-#     route = np.array(data[randint(0,len(data))]).reshape((2,3))
-#     try:
-#         f = optiFFS(route)
-#     except:
-#         f = 0
-#     route_string = np.array2string(route)
-#     top_dict[route_string] = f
-#     worst_key = nsmallest(1, top_dict, key=top_dict.get)
-#     top_dict.pop(worst_key[0])
+random_optimization(sample)
+print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
+      " random matrices from the list.\n \nHere are the ten best matrices:"
+      )
+pprint.pprint(top_dict)
 
-print("My program took ", time.time() - start_time, "seconds to run 100 random matrices from the list")
-print(top_dict)
-
+# # Sequential Optimization
+# starting_matrix = 0
+# start_time = time.time()
+# sequential_optimization(sample, angle_step, start=starting_matrix)
+# print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
+#       " sequential matrices from the list starting at matrix" + str(starting_matrix) + ".\n" +
+#       "\nHere are the ten best matrices:")
+# pprint.pprint(top_dict)
