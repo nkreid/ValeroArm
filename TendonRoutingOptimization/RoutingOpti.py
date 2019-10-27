@@ -72,7 +72,8 @@ def possible_routes(row1,row2):
 a = poss_rows([-1, 1], 3)
 b = poss_rows([-1, 0, 1], 3)
 
-data = np.load('PossibleRoute.npy')
+# np.save('PossibleRoutes',possible_routes(a,b))
+data = np.load('PossibleRoutes.npy')
 routes = []
 radii = []
 for i in data:
