@@ -3,9 +3,13 @@ from scipy import integrate
 import matplotlib.pyplot as plt
 import itertools
 from FFS import ffs
+import os
+import time
+from heapq import nsmallest
+from random import randint
 
 def optiFFS(rout):
-    q2 = np.arange(1, 151, 1)
+    q2 = np.arange(1, 151, 20)
     l1 = .267
     l2 = .272
     rad = np.zeros((1, len(q2)))
@@ -73,16 +77,22 @@ a = poss_rows([-1, 1], 3)
 b = poss_rows([-1, 0, 1], 3)
 
 # np.save('PossibleRoutes',possible_routes(a,b))
-data = np.load('PossibleRoutes.npy')
-routes = []
-radii = []
-for i in data:
-    try:
-        f = optiFFS(i)
-    except:
-        f = 'Error'
-    routes.append(i)
-    radii.append(f)
-print(routes)
-print(radii)
+data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes.npy"))
+top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
+            'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
+start_time = time.time()
+print(len(data))
+# for i in range(100):
+#     route = np.array(data[randint(0,len(data))]).reshape((2,3))
+#     try:
+#         f = optiFFS(route)
+#     except:
+#         f = 0
+#     route_string = np.array2string(route)
+#     top_dict[route_string] = f
+#     worst_key = nsmallest(1, top_dict, key=top_dict.get)
+#     top_dict.pop(worst_key[0])
+
+print("My program took ", time.time() - start_time, "seconds to run 100 random matrices from the list")
+print(top_dict)
 
