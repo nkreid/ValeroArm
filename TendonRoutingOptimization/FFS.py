@@ -3,7 +3,7 @@
 # Working with a 2joint,2link planar system
 import numpy as np
 import matplotlib.pyplot as plt
-
+import time
 
 def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
 
@@ -98,11 +98,14 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
 
     return max_R
 
-
-# l1 = .267
-# l2 = .272
-# r = np.array([[-1, -1, 1], [-1, 1, 0]])
-# q2 = np.arange(10, 150, 10)
-# rad = np.zeros((1, len(q2)))
-# for i in range(len(q2)):
-#     ffs(0, q2[i], l1, l2, r, 1, 'Y')
+start_time2 = time.time()
+l1 = .267
+l2 = .272
+r = np.array([[-1, -1, 1], [-1, 1, 0]])
+q2 = np.arange(-11, 151, 10)
+rad = np.zeros((len(q2)))
+for i in range(len(q2)):
+    x = ffs(0, q2[i], l1, l2, r, 1)
+    rad[i] = x
+    print(rad)
+print("This program took ", time.time() - start_time2, "seconds to run.")

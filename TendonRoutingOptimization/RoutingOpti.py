@@ -10,7 +10,7 @@ import pprint
 
 
 def optiFFS(rout, angle_step):
-    q2 = np.arange(-41, 151, angle_step)
+    q2 = np.arange(-11, 151, angle_step)  # Bounds are physiological boundaries of elbow in degrees
     l1 = .267
     l2 = .272
     rad = np.zeros((1, len(q2)))
@@ -91,7 +91,7 @@ def random_optimization(sample, angle_step, update, test):
     top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
                 'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
     for i in range(sample):
-        route = np.array(data[test[:,i]]).reshape((2,3))
+        route = np.array(data[randint(0, len(data))]).reshape((2,3))
         try:
             f = optiFFS(route, angle_step)
         except:
@@ -126,11 +126,11 @@ def sequential_optimization(sample, angle_step, update):
 data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes_v2.npy"))
 
 # Optimization Parameters
-sample = 10000                   # Max sample is len(data) = 8,600,000
+sample = 1000                   # Max sample is len(data) = 8,600,000
 Status_update_percent = 1      # Percentages to be notified at during process
 angle_step = 20                 # Angle to step through in the optiFFS function
 update_freq = status_update(sample, Status_update_percent)
-test = np.random.random_integers(1, 4000000, (1,100))
+
 
 # # Random Optimization
 # start_time = time.time()
