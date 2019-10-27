@@ -8,12 +8,14 @@ def iterate_matrix(size, scales):
 	return np.array(poss_matrices)
 
 
-# This function takes in unscaled routes, and their scaling matrices, and outputs a 3d array of all possibilities
+# This function takes in unscaled routes, and their scaling matrices, and outputs a 2d array of all possibilities
 def scaled_routes(possible_routes, scales):
 	scaled_matrix_list = []
 	poss_scales = iterate_matrix((2,3), scales)
+	row_mask = (poss_scales == 1.).any(axis=1) # This removes all matrices without a 1, a one is needed for normalizations
+	reduced_scales = poss_scales[row_mask,:]
 	for i in possible_routes:
-		x = i.flatten() * poss_scales
+		x = i.flatten() * reduced_scales
 		x_unique, idx = np.unique(x, return_index = True, axis =0)
 		scaled = x_unique[idx.argsort()]
 		scaled_matrix_list.append(scaled)

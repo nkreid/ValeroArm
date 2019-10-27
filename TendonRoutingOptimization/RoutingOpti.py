@@ -1,6 +1,5 @@
 import numpy as np
 from scipy import integrate
-import matplotlib.pyplot as plt
 import itertools
 from FFS import ffs
 import os
@@ -9,8 +8,9 @@ from heapq import nsmallest
 from random import randint
 import pprint
 
+
 def optiFFS(rout, angle_step):
-    q2 = np.arange(1, 151, angle_step)
+    q2 = np.arange(-41, 151, angle_step)
     l1 = .267
     l2 = .272
     rad = np.zeros((1, len(q2)))
@@ -18,6 +18,7 @@ def optiFFS(rout, angle_step):
             rad[0, i] = ffs(0, q2[i], l1, l2, rout, 1)
     area = integrate.trapz(np.absolute(rad), x=q2)
     return float(area)
+
 
 # This function shows a graph that shows there is no dependence of the shoulder angle
 # on the optimization parameter
@@ -77,6 +78,7 @@ def possible_routes(row1,row2):
 a = poss_rows([-1, 1], 3)
 b = poss_rows([-1, 0, 1], 3)
 
+# This function below is used to create the possible unscaled routes.
 # np.save('PossibleRoutes',possible_routes(a,b))
 
 
@@ -85,11 +87,11 @@ def status_update(sample, percent_print):
     return update
 
 
-def random_optimization(sample, angle_step):
+def random_optimization(sample, angle_step, update, test):
     top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
-            'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
+                'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
     for i in range(sample):
-        route = np.array(data[randint(0,len(data))]).reshape((2,3))
+        route = np.array(data[test[:,i]]).reshape((2,3))
         try:
             f = optiFFS(route, angle_step)
         except:
@@ -98,50 +100,50 @@ def random_optimization(sample, angle_step):
         top_dict[route_string] = f
         worst_key = nsmallest(1, top_dict, key=top_dict.get)
         top_dict.pop(worst_key[0])
-        if i % update_freq == 0:
-            print("You are " + str(i*Status_update_percent/update_freq) + " percent done." )
+        if i % update == 0:
+            print("You are " + str(i*Status_update_percent/update_freq) + " percent done.")
+    return top_dict
 
 
-def sequential_optimization(sample, angle_step, start=0):
+def sequential_optimization(sample, angle_step, update):
     top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
                 'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
     for i in range(sample):
-        route = np.array(data[i+start]).reshape((2,3))
+        route = np.array(data[i+1000000]).reshape((2,3))
         try:
-            f = optiFFS(route)
+            f = optiFFS(route, angle_step)
         except:
             f = 0
-        route_string = np.array2string(route, angle_step)
+        route_string = np.array2string(route)
         top_dict[route_string] = f
         worst_key = nsmallest(1, top_dict, key=top_dict.get)
         top_dict.pop(worst_key[0])
-        if i % update_freq == 0:
+        if i % update == 0:
             print("You are " + str(i*Status_update_percent/update_freq) + " percent done." )
-
-
-# Optimization Parameters
-sample = 1000                   # Max sample is len(data) = 8,600,000
-Status_update_percent = 10      # Percentages to be notified at during process
-angle_step = 20                 # Angle to step through in the optiFFS function
-update_freq = status_update(sample, Status_update_percent)
+    return top_dict
 
 # Data from PossibleScaledRoutes.py
-data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes.npy"))
+data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes_v2.npy"))
 
+# Optimization Parameters
+sample = 10000                   # Max sample is len(data) = 8,600,000
+Status_update_percent = 1      # Percentages to be notified at during process
+angle_step = 20                 # Angle to step through in the optiFFS function
+update_freq = status_update(sample, Status_update_percent)
+test = np.random.random_integers(1, 4000000, (1,100))
 
-# Random Optimization
-start_time = time.time()
-random_optimization(sample)
-print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
-      " random matrices from the list.\n \nHere are the ten best matrices:"
-      )
-pprint.pprint(top_dict)
-
-# # Sequential Optimization
-# starting_matrix = 0
+# # Random Optimization
 # start_time = time.time()
-# sequential_optimization(sample, angle_step, start=starting_matrix)
+# best_routes = random_optimization(sample, angle_step, update_freq, test)
 # print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
-#       " sequential matrices from the list starting at matrix" + str(starting_matrix) + ".\n" +
-#       "\nHere are the ten best matrices:")
-# pprint.pprint(top_dict)
+#       " random matrices from the list.\n \nHere are the ten best matrices:"
+#       )
+# pprint.pprint(best_routes)
+
+# Sequential Optimization
+start_time2 = time.time()
+best_routes = sequential_optimization(sample, angle_step, update_freq)
+print("This program took ", time.time() - start_time2, "seconds to run " + str(sample) +
+      " sequential matrices from the list.\n" +
+      "\nHere are the ten best matrices:")
+pprint.pprint(best_routes)
