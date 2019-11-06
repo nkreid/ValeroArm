@@ -62,9 +62,10 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
     def LargestCircle(hul, x_center, y_center):
         space = np.linspace(0, 2*np.pi)
         circ = np.array([np.cos(space), np.sin(space)])
-        r = 0
+        r = 5
         step = 0.0005
         inHull = True
+        num_iterations = 0
 
         while inHull == True:
 
@@ -75,9 +76,13 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
                 hull = Delaunay(hul)
             if np.all(hull.find_simplex(points.T)>=0):
                 r += step
+                num_iterations += 1
             else:
                 break
+        print(r)
         return r, points
+
+
 
     max_R, circle = LargestCircle(W.T, endpoint[0], endpoint[1])
 

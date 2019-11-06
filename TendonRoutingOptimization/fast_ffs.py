@@ -1,6 +1,29 @@
 import numpy as np
 import time
 
+def LargestCircle(hul, x_center, y_center):
+	space = np.linspace(0, 2*np.pi)
+	circ = np.array([np.cos(space), np.sin(space)])
+	r = 0
+	step = 0.0005
+	inHull = True
+	num_iterations = 0
+	while inHull == True:
+
+		points = (r* circ) + np.array([x_center, y_center])
+
+		from scipy.spatial import Delaunay
+		if not isinstance(hul, Delaunay):
+			hull = Delaunay(hul)
+		if np.all(hull.find_simplex(points.T)>=0):
+			r += step
+			num_iterations += 1
+		else:
+			break
+	print(r)
+	return r, points
+
+
 def fast_ffs(q2, R):
 
 	# Convert to Radians
@@ -42,28 +65,8 @@ def fast_ffs(q2, R):
 
 	hull = ConvexHull(W.T)
 
-	def LargestCircle(hul, x_center, y_center):
-		space = np.linspace(0, 2*np.pi)
-		circ = np.array([np.cos(space), np.sin(space)])
-		r = 0
-		step = 0.0005
-		inHull = True
-
-		while inHull == True:
-
-			points = (r* circ) + np.array([x_center, y_center])
-
-			from scipy.spatial import Delaunay
-			if not isinstance(hul, Delaunay):
-				hull = Delaunay(hul)
-			if np.all(hull.find_simplex(points.T)>=0):
-				r += step
-			else:
-				break
-		return r, points
-
-	max_R, circle = LargestCircle(W.T, endpoint[0], endpoint[1])
-
+	# max_R, circle = LargestCircle(W.T, endpoint[0], endpoint[1])
+	max_R = 1
 	return max_R
 
 start_time2 = time.time()
@@ -75,3 +78,4 @@ for i in range(len(q2)):
 	rad[i]= radi
 	print(rad)
 print("This program took ", time.time() - start_time2, "seconds to run.")
+
