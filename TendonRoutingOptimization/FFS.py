@@ -4,6 +4,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import time
+from scipy.spatial import Delaunay
 
 def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
 
@@ -62,25 +63,29 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
     def LargestCircle(hul, x_center, y_center):
         space = np.linspace(0, 2*np.pi)
         circ = np.array([np.cos(space), np.sin(space)])
-        r = 5
-        step = 0.0005
+        bounds_of_radius = [0,10]
         inHull = True
+        tolerance = 0.00001
         num_iterations = 0
 
         while inHull == True:
 
-            points = (r* circ) + np.array([x_center, y_center])
+            if bounds_of_radius[1] - bounds_of_radius[0] < tolerance:
+                # print("%s iter, final_radius: %s "%(num_iterations, bounds_of_radius[0]))
+                return(bounds_of_radius[0],points)
 
-            from scipy.spatial import Delaunay
+            r = (bounds_of_radius[0] + bounds_of_radius[1])/2.0
+            points = (r * circ) + np.array([x_center, y_center])
+
             if not isinstance(hul, Delaunay):
                 hull = Delaunay(hul)
-            if np.all(hull.find_simplex(points.T)>=0):
-                r += step
-                num_iterations += 1
+
+            was_too_small = np.all(hull.find_simplex(points.T) >= 0)
+            num_iterations += 1
+            if was_too_small:
+                bounds_of_radius = [r, bounds_of_radius[1]]
             else:
-                break
-        print(r)
-        return r, points
+                bounds_of_radius = [bounds_of_radius[0], r]
 
 
 

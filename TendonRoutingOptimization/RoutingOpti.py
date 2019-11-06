@@ -87,7 +87,7 @@ def status_update(sample, percent_print):
     return update
 
 
-def random_optimization(sample, angle_step, update, test):
+def random_optimization(sample, angle_step, update):
     top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
                 'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
     for i in range(sample):
@@ -109,7 +109,7 @@ def sequential_optimization(sample, angle_step, update):
     top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
                 'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
     for i in range(sample):
-        route = np.array(data[i+1000000]).reshape((2,3))
+        route = np.array(data[i+10,000]).reshape((2,3))
         try:
             f = optiFFS(route, angle_step)
         except:
@@ -128,22 +128,22 @@ data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes_v2.npy"))
 # Optimization Parameters
 sample = 1000                   # Max sample is len(data) = 8,600,000
 Status_update_percent = 1      # Percentages to be notified at during process
-angle_step = 20                 # Angle to step through in the optiFFS function
+angle_step = 5                 # Angle to step through in the optiFFS function
 update_freq = status_update(sample, Status_update_percent)
 
 
 # # Random Optimization
-# start_time = time.time()
-# best_routes = random_optimization(sample, angle_step, update_freq, test)
-# print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
-#       " random matrices from the list.\n \nHere are the ten best matrices:"
-#       )
-# pprint.pprint(best_routes)
+start_time = time.time()
+best_routes = random_optimization(sample, angle_step, update_freq)
+print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
+      " random matrices from the list.\n \nHere are the ten best matrices:"
+      )
+pprint.pprint(best_routes)
 
 # Sequential Optimization
-start_time2 = time.time()
-best_routes = sequential_optimization(sample, angle_step, update_freq)
-print("This program took ", time.time() - start_time2, "seconds to run " + str(sample) +
-      " sequential matrices from the list.\n" +
-      "\nHere are the ten best matrices:")
-pprint.pprint(best_routes)
+# start_time2 = time.time()
+# best_routes = sequential_optimization(sample, angle_step, update_freq)
+# print("This program took ", time.time() - start_time2, "seconds to run " + str(sample) +
+#       " sequential matrices from the list.\n" +
+#       "\nHere are the ten best matrices:")
+# pprint.pprint(best_routes)
