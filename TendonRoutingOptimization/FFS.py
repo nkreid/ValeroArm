@@ -63,16 +63,16 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
     def LargestCircle(hul, x_center, y_center):
         space = np.linspace(0, 2*np.pi)
         circ = np.array([np.cos(space), np.sin(space)])
-        bounds_of_radius = [0,10]
+        bounds_of_radius = [0.0,10.0]
         inHull = True
-        tolerance = 0.00001
+        tolerance = 0.0001
         num_iterations = 0
 
         while inHull == True:
 
             if bounds_of_radius[1] - bounds_of_radius[0] < tolerance:
-                # print("%s iter, final_radius: %s "%(num_iterations, bounds_of_radius[0]))
-                return(bounds_of_radius[0],points)
+                # print("%s iter, final_radius: %s , route: %s "%(num_iterations, bounds_of_radius[1], R))
+                return(bounds_of_radius[1],points)
 
             r = (bounds_of_radius[0] + bounds_of_radius[1])/2.0
             points = (r * circ) + np.array([x_center, y_center])
@@ -108,14 +108,14 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
 
     return max_R
 
-start_time2 = time.time()
-l1 = .267
-l2 = .272
-r = np.array([[-1, -1, 1], [-1, 1, 0]])
-q2 = np.arange(-11, 151, 10)
-rad = np.zeros((len(q2)))
-for i in range(len(q2)):
-    x = ffs(0, q2[i], l1, l2, r, 1)
-    rad[i] = x
-    print(rad)
-print("This program took ", time.time() - start_time2, "seconds to run.")
+# start_time2 = time.time()
+# l1 = .267
+# l2 = .272
+# r = np.array([[-1, -1, 1], [-1, 1, 0]])
+# q2 = np.arange(-11, 151, 10)
+# rad = np.zeros((len(q2)))
+# for i in range(len(q2)):
+#     x = ffs(0, q2[i], l1, l2, r, 1)
+#     rad[i] = x
+#     print(rad)
+# print("This program took ", time.time() - start_time2, "seconds to run.")
