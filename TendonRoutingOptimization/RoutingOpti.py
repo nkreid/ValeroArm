@@ -108,7 +108,7 @@ def sequential_optimization(sample, angle_step, update):
     top_dict = {'Start1': 0, 'Start2': 0, 'Start3': 0, 'Start4': 0, 'Start5': 0,
                 'Start6': 0, 'Start7': 0, 'Start8': 0, 'Start9': 0, 'Start10': 0}
     for i in range(sample):
-        route = np.array(data[i+100000]).reshape((2,3))
+        route = np.array(data[i+200000]).reshape((2,3))
         try:
             f = optiFFS(route, angle_step)
         except:
@@ -126,36 +126,29 @@ def sequential_optimization(sample, angle_step, update):
 data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes_v2.npy"))
 
 # Optimization Parameters
-sample = 1000                   # Max sample is len(data) = 4,348,472
+sample = len(data)                   # Max sample is len(data) = 4,348,472
 Status_update_percent = 1      # Percentages to be notified at during process
 angle_step = 20                 # Angle to step through in the optiFFS function
 update_freq = status_update(sample, Status_update_percent)
 
 
-# Random Optimization
-random_1000 = np.random.randint(0, high=4348472, size=1000)
-print(random_1000)
-start_time = time.time()
-best_routes = random_optimization(sample, angle_step, update_freq, random_1000)
-print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
-      " random matrices from the list.\n \nHere are the ten best matrices:"
-      )
-pprint.pprint(best_routes)
-
-angle_step = 5
-start_time = time.time()
-best_routes = random_optimization(sample, angle_step, update_freq, random_1000)
-print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
-      " random matrices from the list.\n \nHere are the ten best matrices:"
-      )
-pprint.pprint(best_routes)
-# # Sequential Optimization
-# start_time2 = time.time()
-# best_routes = sequential_optimization(sample, angle_step, update_freq)
-# print("This program took ", time.time() - start_time2, "seconds to run " + str(sample) +
-#       " sequential matrices from the list.\n" +
-#       "\nHere are the ten best matrices:")
+# # Random Optimization
+# random_1000 = np.random.randint(0, high=4348472, size=1000)
+# start_time = time.time()
+# best_routes = random_optimization(sample, angle_step, update_freq, random_1000)
+# print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
+#       " random matrices from the list.\n \nHere are the ten best matrices:"
+#       )
 # pprint.pprint(best_routes)
+
+
+# Sequential Optimization
+start_time2 = time.time()
+best_routes = sequential_optimization(sample, angle_step, update_freq)
+print("This program took ", time.time() - start_time2, "seconds to run " + str(sample) +
+      " sequential matrices from the list.\n" +
+      "\nHere are the ten best matrices:")
+pprint.pprint(best_routes)
 
 
 
