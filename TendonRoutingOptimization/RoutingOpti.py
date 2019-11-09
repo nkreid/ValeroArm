@@ -143,32 +143,32 @@ Status_update_percent = 1      # Percentages to be notified at during process
 angle_step = 20                 # Angle to step through in the optiFFS function
 update_freq = status_update(sample, Status_update_percent)
 
-# Random Optimization
-random_1000 = np.random.randint(0, high=4348472, size=1000)
-start_time = time.time()
-best_routes = random_optimization(sample, angle_step, update_freq, random_1000)
-print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
-      " random matrices from the list.\n \nHere are the hundred best matrices:"
-      )
-# Create a list of tuples sorted by index 1 i.e. value field
-listofTuples = sorted(best_routes.items() ,  key=lambda x: x[1])
-
-# Iterate over the sorted sequence
-for elem in listofTuples :
-    print(elem[0] , " ::" , elem[1] )
-
-
-# # Sequential Optimization
-# start_time2 = time.time()
-# best_routes = sequential_optimization(sample, angle_step, update_freq)
-# save_obj(best_routes, 'best_routes')
-# print("This program took ", time.time() - start_time2, "seconds to run " + str(sample) +
-#       " sequential matrices from the list.\n" +
-#       "\nHere are the hundred best matrices:")
+# # Random Optimization
+# random_1000 = np.random.randint(0, high=4348472, size=1000)
+# start_time = time.time()
+# best_routes = random_optimization(sample, angle_step, update_freq, random_1000)
+# print("This program took ", time.time() - start_time, "seconds to run " + str(sample) +
+#       " random matrices from the list.\n \nHere are the hundred best matrices:"
+#       )
 # # Create a list of tuples sorted by index 1 i.e. value field
 # listofTuples = sorted(best_routes.items() ,  key=lambda x: x[1])
 #
 # # Iterate over the sorted sequence
 # for elem in listofTuples :
 #     print(elem[0] , " ::" , elem[1] )
+
+
+# Sequential Optimization
+start_time2 = time.time()
+best_routes = sequential_optimization(sample, angle_step, update_freq)
+save_obj(best_routes, 'best_routes')
+print("This program took ", time.time() - start_time2, "seconds to run " + str(sample) +
+      " sequential matrices from the list.\n" +
+      "\nHere are the hundred best matrices:")
+# Create a list of tuples sorted by index 1 i.e. value field
+listofTuples = sorted(best_routes.items() ,  key=lambda x: x[1])
+
+# Iterate over the sorted sequence
+for elem in listofTuples :
+    print(elem[0] , " ::" , elem[1] )
 
