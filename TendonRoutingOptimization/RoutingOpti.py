@@ -135,8 +135,8 @@ def sequential_optimization(data, sample, angle_step, update):
 
 
 # Data from PossibleScaledRoutes.py
-data1 = np.load(os.path.expanduser("~/Downloads/Normalized_Routes_v2.npy"))
-data2 = np.load('temp_top_routes.npy')
+data1 = np.load(os.path.expanduser("~/Downloads/Normalized_Routes_v2.npy"))  # Large data set, all possibilites
+data2 = np.load('best_routes.npy')  # optimizing best 100 from data1
 
 # Optimization Parameters
 sample = len(data2)                   # Max sample is len(data) = 4,348,472
