@@ -138,7 +138,7 @@ def sequential_optimization(sample, angle_step, update):
 data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes_v2.npy"))
 
 # Optimization Parameters
-sample = 1000                   # Max sample is len(data) = 4,348,472
+sample = len(data)                   # Max sample is len(data) = 4,348,472
 Status_update_percent = 1      # Percentages to be notified at during process
 angle_step = 20                 # Angle to step through in the optiFFS function
 update_freq = status_update(sample, Status_update_percent)
@@ -170,5 +170,5 @@ listofTuples = sorted(best_routes.items() ,  key=lambda x: x[1])
 
 # Iterate over the sorted sequence
 for elem in listofTuples :
-    print(elem[0] , " ::" , elem[1] )
+    print(elem[0] , " ::" , elem[1])
 
