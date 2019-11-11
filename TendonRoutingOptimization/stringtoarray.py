@@ -11,7 +11,7 @@ def string2array(string):
 	x = x.replace(']', '')
 	x = x.replace('\n', '')
 	a = ' '.join(x.split())
-	return a
+	return np.fromstring(a, sep=' ')
 
 
 def keys_return(my_dict):
@@ -29,4 +29,7 @@ def pkl2npy_file(pkl_file):
 	best_routes = np.vstack(best_array_list)
 	np.save(pkl_file, best_routes)
 
-pkl2npy_file('best_routes')
+# pkl2npy_file('temp_top_routes')
+
+data = np.load('temp_top_routes.npy')
+print(data)

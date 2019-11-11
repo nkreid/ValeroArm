@@ -111,11 +111,11 @@ def ffs(q1, q2, l_1, l_2, R, maxmotorforce, plotOn = 'N'):
 # start_time2 = time.time()
 # l1 = .267
 # l2 = .272
-# r = np.array([[-1, -1, 1], [-1, 1, 0]])
+# r = np.array([[-1, 0.9, 0.1], [-0.9, -0.2, 1]])
 # q2 = np.arange(-11, 151, 10)
 # rad = np.zeros((len(q2)))
 # for i in range(len(q2)):
-#     x = ffs(0, q2[i], l1, l2, r, 1)
+#     x = ffs(0, q2[i], l1, l2, r, 1, plotOn='Y')
 #     rad[i] = x
 #     print(rad)
 # print("This program took ", time.time() - start_time2, "seconds to run.")

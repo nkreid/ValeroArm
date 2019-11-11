@@ -115,7 +115,7 @@ def random_optimization(sample, angle_step, update, test_order):
     return top_dict
 
 
-def sequential_optimization(sample, angle_step, update):
+def sequential_optimization(data, sample, angle_step, update):
     test_keys = list(range(100))
     top_dict = {el:0 for el in test_keys}
     for i in range(sample):
@@ -135,12 +135,13 @@ def sequential_optimization(sample, angle_step, update):
 
 
 # Data from PossibleScaledRoutes.py
-data = np.load(os.path.expanduser("~/Downloads/Normalized_Routes_v2.npy"))
+data1 = np.load(os.path.expanduser("~/Downloads/Normalized_Routes_v2.npy"))
+data2 = np.load('temp_top_routes.npy')
 
 # Optimization Parameters
-sample = len(data)                   # Max sample is len(data) = 4,348,472
+sample = len(data2)                   # Max sample is len(data) = 4,348,472
 Status_update_percent = 1      # Percentages to be notified at during process
-angle_step = 20                 # Angle to step through in the optiFFS function
+angle_step = 2                 # Angle to step through in the optiFFS function
 update_freq = status_update(sample, Status_update_percent)
 
 # # Random Optimization
@@ -160,7 +161,7 @@ update_freq = status_update(sample, Status_update_percent)
 
 # Sequential Optimization
 start_time2 = time.time()
-best_routes = sequential_optimization(sample, angle_step, update_freq)
+best_routes = sequential_optimization(data2, sample, angle_step, update_freq)
 save_obj(best_routes, 'best_routes')
 print("This program took ", time.time() - start_time2, "seconds to run " + str(sample) +
       " sequential matrices from the list.\n" +
