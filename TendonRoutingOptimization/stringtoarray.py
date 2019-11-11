@@ -29,7 +29,13 @@ def pkl2npy_file(pkl_file):
 	best_routes = np.vstack(best_array_list)
 	np.save(pkl_file, best_routes)
 
-# pkl2npy_file('temp_top_routes')
+pkl2npy_file('best_routes')
 
-data = np.load('temp_top_routes.npy')
-print(data)
+a = load_obj('best_routes_step2')
+
+# Create a list of tuples sorted by index 1 i.e. value field
+listofTuples = sorted(a.items() ,  key=lambda x: x[1])
+
+# Iterate over the sorted sequence
+for elem in listofTuples :
+	print(elem[0] , " ::" , elem[1])

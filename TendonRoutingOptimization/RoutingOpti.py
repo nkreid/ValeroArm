@@ -162,7 +162,7 @@ update_freq = status_update(sample, Status_update_percent)
 # Sequential Optimization
 start_time2 = time.time()
 best_routes = sequential_optimization(data2, sample, angle_step, update_freq)
-save_obj(best_routes, 'best_routes')
+save_obj(best_routes, 'best_routes_step2')
 print("This program took ", time.time() - start_time2, "seconds to run " + str(sample) +
       " sequential matrices from the list.\n" +
       "\nHere are the hundred best matrices:")
