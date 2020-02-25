@@ -17,9 +17,11 @@ def optiFFS(rout, angle_step):
     rad = np.zeros((1, num_steps))
     for i in range(len(q2)):
             rad[0, i] = fast_ffs(q2[i], rout)
+
     area = integrate.trapz(np.absolute(rad), x=q2)
-    mean = area/num_steps
-    return float(area)
+    mean = area/len(rad)
+    stdev = np.std(rad)
+    return float(area), float(mean), float(stdev)
 
 
 # This function shows a graph that shows there is no dependence of the shoulder angle
@@ -121,7 +123,7 @@ def sequential_optimization(data, sample, angle_step, update):
     for i in range(sample):
         route = np.array(data[i]).reshape((2,3))
         try:
-            f = optiFFS(route, angle_step)
+            f = optiFFS(route, angle_step)[0]
         except:
             f = 0
         route_string = np.array2string(route)

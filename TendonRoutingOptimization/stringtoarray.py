@@ -38,4 +38,4 @@ listofTuples = sorted(a.items() ,  key=lambda x: x[1])
 
 # Iterate over the sorted sequence
 for elem in listofTuples :
-	print(elem[0] , " ::" , elem[1])
+	print(elem[0] , " ::" , elem[1]/160)
