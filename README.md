@@ -228,3 +228,5 @@ It is interesting to note that our best routes are not all ones and zeros as ini
 ![Modular Arm](/Hardware/Renderings/HAND.png) 
 
   We designed a multi-moment-arm (MMA) for a planar joint. It allowed a multiple tendons to pass over the same joint with different moment arms. If I were to experimentally test the optimization that I presented above, I would create different MMA according to different routes. I would then put the endpoint of the arm into a device to measure the force. I could then sweep the elbow joint and measure the forces in different postures to see if it supports the data derived theoretically. 
+![MMA](Images/MMA.png)
+
