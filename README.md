@@ -218,7 +218,11 @@ I spent the summer of 2019 building a cost-effective, durable, and versatile ten
  [-0.9 -0.2  1. ]]  :: 2.4554500579833984
 ```
 
+It is interesting to note that our best routes are not all ones and zeros as initially exepcted. However, the top 5 results are all very similar with minor deviations.
+
 # Physical Design and Construction
   The first design of the arm was constructed together with Paris Hijali. It was made out of PVC and 3D printed components. While it was a solid proof of concept, there were many problems that arose. I addressed many of these problems in the second version. 
   
   Version 2 was created using very modular parts which allowed for the arm to be modified depending on the task. Most of the parts were ordered from McMaster or ServoCity. This version of the arm included a planar elbow and shoulder joint along with a rotational pronation/supination joint in the forearm. At the end of the arm, there were three versions of a wrist-- ranging from zero to the two degrees of freedom that a real wrist has. We constructed the version with zero DOFs for the first phase of testing. The current hand we were using in the lab was underactuated and driven by two servos. There was a cavity created in the distal forearm to house the two servos needed to drive the hand. 
+  
+  We designed a multi-moment-arm (MMA) for a planar joint. It allowed a multiple tendons to pass over the same joint with different moment arms. If I were to experimentally test the optimization that I presented above, I would create different MMA according to different routes. I would then put the endpoint of the arm into a device to measure the force. I could then sweep the elbow joint and measure the forces in different postures to see if it supports the data derived theoretically. 
