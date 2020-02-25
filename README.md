@@ -14,8 +14,9 @@ I spent the summer of 2019 building a cost-effective, durable, and versatile ten
   Out of the 14 matrices, 10 produced numerical results with 2 routes clearly stronger than the rest. These two matrices were “opposites” of each other as shown in FIGURE. This optimal tendon routing is consistent with the routing chosen in (G2P Paper). This information was presented on a poster at the Keck School of Medicine’s summer undergraduate poster symposium. 
 	
   The 14 feasible routes were then scaled to allow for moment arm differences between each muscle and joints. The 14 feasible routes were multiplied by almost 2 million scaling matrices by scalar multiplication.  These scaling matrices were all the variations of a 2x3 matrix containing the numbers between 0 and 1 (inclusive) with a 0.1 step (0,0.1,0.2,0.3…). By choosing a maximum of 1.0, these values are normalized by dividing all the values by the arm's largest moment arm. These new matrices were ran through the same optimization procedure as before and the top 100 matrices were kept. The results are as follows:
+```
        MATRIX         Average Force Output
-  [[-1.   0.2  0.9]
+[[-1.   0.2  0.9]
  [-0.1 -1.   1. ]]  :: 2.3684792518615723
 [[-1.   1.   0.4]
  [-0.6 -0.9  1. ]]  :: 2.369333267211914
@@ -215,7 +216,7 @@ I spent the summer of 2019 building a cost-effective, durable, and versatile ten
  [-0.9 -0.2  1. ]]  :: 2.4544849395751953
 [[-1.   0.9  0.1]
  [-0.9 -0.2  1. ]]  :: 2.4554500579833984
-
+```
 
 # Physical Design and Construction
   The first design of the arm was constructed together with Paris Hijali. It was made out of PVC and 3D printed components. While it was a solid proof of concept, there were many problems that arose. I addressed many of these problems in the second version. 
