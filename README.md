@@ -1,8 +1,8 @@
 # ValeroArm
-I spent the summer of 2019 building a cost-effective, durable, and versatile tendon-driven arm. The motivation was to build an arm that had planar, universal, and rotational joints on a large scale. This design could then be scaled down to the size of fingers on the hand. We built and modled a planar, two joint, three muscle system.
+I spent the summer of 2019 building a cost-effective, durable, and versatile tendon-driven arm. The motivation was to build an arm that had planar, universal, and rotational joints on a large scale. This design could then be scaled down to the size of fingers on the hand. We built and modeled a planar, two joint, three muscle system.
 
 # Tendon Routing and Moment Arm Size Optimization
-  A large focus was directed toward finding the optimal tendon routing for the arm. This was done in python by maximizing the radius of a circle inside the Feasible Force Set with the circle’s center located at the endpoint. The choice of a circle defined the maximum force the endpoint could exert in all directions. The routes were sweeped over the anotmical limits of the elbow (-10 degrees,150 degrees) and averaged over the range. This average force production was our metric we used to pick the most versatile route. We defined versatile as “producing the largest force in all directions, for every position.”
+  A large focus was directed toward finding the optimal tendon routing for the arm. This was done in python by maximizing the radius of a circle inside the Feasible Force Set with the circle’s center located at the endpoint. The choice of a circle defined the maximum force the endpoint could exert in all directions. The routes were swept over the anatmical limits of the elbow (-10 degrees,150 degrees) and averaged over the range. This average force production was our metric we used to pick the most versatile route. We defined versatile as “producing the largest force in all directions, for every position.”
   
   For a two joint, three muscle this produces a 2x3 matrix with close to 800 combinations. Each row is a joint and each column is a muscle. The numbers one and negative one were used to denote the direction of angle change that a tendon could produce. Tendons can only act on a joint in one direction because muscles only contract and cannot extend. The possible R matrices were reduced to 14 by the following assumptions: 
     
@@ -218,7 +218,7 @@ I spent the summer of 2019 building a cost-effective, durable, and versatile ten
  [-0.9 -0.2  1. ]]  :: 2.4554500579833984
 ```
 
-It is interesting to note that our best routes are not all ones and zeros as initially exepcted. However, the top 5 results are all very similar with minor deviations.
+It is interesting to note that our best routes are not all ones and zeros as initially expected. However, the top 5 results are all very similar with minor deviations.
 
 # Physical Design and Construction
   The first design of the arm was constructed together with Paris Hijali. It was made out of PVC and 3D printed components. While it was a solid proof of concept, there were many problems that arose. I addressed many of these problems in the second version. 
@@ -227,7 +227,7 @@ It is interesting to note that our best routes are not all ones and zeros as ini
   Version 2 was created using very modular parts which allowed for the arm to be modified depending on the task. Most of the parts were ordered from McMaster or ServoCity. This version of the arm included a planar elbow and shoulder joint along with a rotational pronation/supination joint in the forearm. At the end of the arm, there were three versions of a wrist-- ranging from zero to the two degrees of freedom that a real wrist has. We constructed the version with zero DOFs for the first phase of testing. The current hand we were using in the lab was underactuated and driven by two servos. There was a cavity created in the distal forearm to house the two servos needed to drive the hand. 
 ![Modular Arm](/Hardware/Renderings/HAND.png) 
 
-  We designed a multi-moment-arm (MMA) for a planar joint. It allowed a multiple tendons to pass over the same joint with different moment arms. If I were to experimentally test the optimization that I presented above, I would create different MMA according to different routes. I would then put the endpoint of the arm into a device to measure the force. I could then sweep the elbow joint and measure the forces in different postures to see if it supports the data derived theoretically. 
+  We designed a multi-moment-arm (MMA) for a planar joint. It allowed multiple tendons to pass over the same joint with different moment arms. If I were to experimentally test the optimization that I presented above, I would create different MMA according to different routes. I would then put the endpoint of the arm into a device to measure the force. I could then sweep the elbow joint and measure the forces in different postures to see if it supports the data derived theoretically. 
 ![MMA](Images/MMA.png)
 
 # Future Directions
