@@ -231,7 +231,7 @@ It is interesting to note that our best routes are not all ones and zeros as ini
 ![MMA](Images/MMA.png)
 
 # Future Directions
-All the code is linked on the GitHub for this page at https://github.com/kreidpac/ValeroArm
+All the code is linked on the GitHub for this page at https://github.com/nkreid/ValeroArm
 In addition, all the CAD files are available on Fusion 360 under the project title 'HAND - BBDL'
 If you need access to either please ask Suraj or Koby.
 
